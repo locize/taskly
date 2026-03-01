@@ -6,6 +6,7 @@ import type { Todo, Category, Priority, UserProfile, NotificationPrefs } from '.
 const INITIAL_TODOS: Todo[] = [
   {
     id: 1,
+    // i18next-instrument-ignore
     text: 'Design the app mockup',
     completed: true,
     priority: 'high',
@@ -14,6 +15,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 2,
+    // i18next-instrument-ignore
     text: 'Set up Vite + React project',
     completed: true,
     priority: 'high',
@@ -22,6 +24,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 3,
+    // i18next-instrument-ignore
     text: 'Add i18next for translations',
     completed: false,
     priority: 'high',
@@ -31,6 +34,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 4,
+    // i18next-instrument-ignore
     text: 'Write the tutorial blog post',
     completed: false,
     priority: 'medium',
@@ -40,6 +44,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 5,
+    // i18next-instrument-ignore
     text: 'Buy groceries',
     completed: false,
     priority: 'low',
@@ -48,6 +53,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 6,
+    // i18next-instrument-ignore
     text: 'Morning run (30 min)',
     completed: true,
     priority: 'medium',
@@ -56,6 +62,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 7,
+    // i18next-instrument-ignore
     text: 'Call the dentist',
     completed: false,
     priority: 'medium',
@@ -65,6 +72,7 @@ const INITIAL_TODOS: Todo[] = [
   },
   {
     id: 8,
+    // i18next-instrument-ignore
     text: 'Read 20 pages',
     completed: false,
     priority: 'low',
@@ -105,6 +113,7 @@ export function TodoProvider({ children }: { children: ReactNode }) {
   })
 
   const [profile, setProfile] = useState<UserProfile>({
+    // i18next-instrument-ignore
     name: 'Alex Johnson',
     email: 'alex@example.com',
     avatarColor: '#c8622a',
