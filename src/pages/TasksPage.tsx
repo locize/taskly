@@ -219,16 +219,24 @@ function TaskItem({ todo, onToggle, onDelete }: TaskItemProps) {
 // ─── Tasks Page ───────────────────────────────────────────────────────────────
 
 const FILTER_OPTIONS: { key: FilterType; label: string }[] = [
+  // i18next-instrument-ignore
   { key: 'all', label: 'All' },
+  // i18next-instrument-ignore
   { key: 'active', label: 'Active' },
+  // i18next-instrument-ignore
   { key: 'completed', label: 'Completed' },
 ]
 
 const CATEGORY_FILTER_OPTIONS: { key: Category | 'all'; label: string }[] = [
+  // i18next-instrument-ignore
   { key: 'all', label: 'All categories' },
+  // i18next-instrument-ignore
   { key: 'work', label: '💼 Work' },
+  // i18next-instrument-ignore
   { key: 'personal', label: '🌱 Personal' },
+  // i18next-instrument-ignore
   { key: 'shopping', label: '🛒 Shopping' },
+  // i18next-instrument-ignore
   { key: 'health', label: '💪 Health' },
 ]
 

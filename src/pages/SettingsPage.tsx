@@ -4,11 +4,17 @@ import styles from './SettingsPage.module.css'
 
 // These are the languages that will be wired up with i18next in the tutorial.
 const LANGUAGES = [
+  // i18next-instrument-ignore
   { code: 'en', label: 'English',    flag: '🇬🇧' },
+  // i18next-instrument-ignore
   { code: 'de', label: 'Deutsch',    flag: '🇩🇪' },
+  // i18next-instrument-ignore
   { code: 'it', label: 'Italiano',   flag: '🇮🇹' },
+  // i18next-instrument-ignore
   { code: 'fr', label: 'Français',   flag: '🇫🇷' },
+  // i18next-instrument-ignore
   { code: 'es', label: 'Español',    flag: '🇪🇸' },
+  // i18next-instrument-ignore
   { code: 'ja', label: '日本語',      flag: '🇯🇵' },
 ]
 

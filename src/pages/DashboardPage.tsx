@@ -25,9 +25,13 @@ const CATEGORY_ICONS: Record<Category, string> = {
 
 function formatRelativeDate(dateStr: string): string {
   const diff = Math.round((new Date(dateStr).getTime() - Date.now()) / 86400000)
+  // i18next-instrument-ignore
   if (diff < 0) return 'Overdue'
+  // i18next-instrument-ignore
   if (diff === 0) return 'Today'
+  // i18next-instrument-ignore
   if (diff === 1) return 'Tomorrow'
+  // i18next-instrument-ignore
   return `In ${diff} days`
 }
 

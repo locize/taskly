@@ -11,6 +11,7 @@ interface SidebarProps {
 const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
   {
     page: 'dashboard',
+    // i18next-instrument-ignore
     label: 'Dashboard',
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -23,6 +24,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
   },
   {
     page: 'tasks',
+    // i18next-instrument-ignore
     label: 'My Tasks',
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -32,6 +34,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
   },
   {
     page: 'settings',
+    // i18next-instrument-ignore
     label: 'Settings',
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
