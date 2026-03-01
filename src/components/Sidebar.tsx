@@ -62,7 +62,9 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
     <aside className={styles.sidebar}>
       {/* Brand */}
       <div className={styles.brand}>
+        {/* i18next-instrument-ignore */}
         <span className={styles.brandMark}>✦</span>
+        {/* i18next-instrument-ignore */}
         <span className={styles.brandName}>Taskly</span>
       </div>
 
