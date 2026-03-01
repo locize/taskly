@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+  background: var(--bg);
+  /* subtle dot pattern for the background */
+  background-image: radial-gradient(circle, #d8cebc 1px, transparent 1px);
+  background-size: 24px 24px;
+}
