@@ -13,11 +13,14 @@ interface Todo {
 
 // ─── Seed data ────────────────────────────────────────────────────────────────
 
-// i18next-instrument-ignore
 const INITIAL_TODOS: Todo[] = [
+  // i18next-instrument-ignore
   { id: 1, text: 'Design the app mockup', completed: true },
+  // i18next-instrument-ignore
   { id: 2, text: 'Set up the Vite project', completed: true },
+  // i18next-instrument-ignore
   { id: 3, text: 'Add i18next for translations', completed: false },
+  // i18next-instrument-ignore
   { id: 4, text: 'Write the tutorial blog post', completed: false },
 ]
 
