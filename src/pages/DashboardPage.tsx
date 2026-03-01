@@ -90,6 +90,7 @@ export default function DashboardPage() {
             <div>
               <span className={styles.streakNum}>{STREAK_DAYS}</span>
               <span className={styles.streakLabel}>
+                {/* @ts-ignore */}
                 {STREAK_DAYS === 1 ? 'day streak' : 'day streak'}
               </span>
             </div>
