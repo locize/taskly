@@ -263,9 +263,12 @@ export default function SettingsPage() {
           </div>
           <div className={styles.aboutCard}>
             <div className={styles.aboutBrand}>
+              {/* i18next-instrument-ignore */}
               <span className={styles.aboutMark}>✦</span>
+              {/* i18next-instrument-ignore */}
               <span className={styles.aboutName}>Taskly</span>
             </div>
+            {/* i18next-instrument-ignore */}
             <p className={styles.aboutVersion}>Version 1.0.0</p>
             <p className={styles.aboutStack}>Built with Vite · React · TypeScript</p>
             <p className={styles.aboutDesc}>
