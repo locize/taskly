@@ -9,9 +9,9 @@ const LANGUAGES = [
   // i18next-instrument-ignore
   { code: 'de', label: 'Deutsch',    flag: '🇩🇪' },
   // i18next-instrument-ignore
-  { code: 'it', label: 'Italiano',   flag: '🇮🇹' },
-  // i18next-instrument-ignore
   { code: 'fr', label: 'Français',   flag: '🇫🇷' },
+  // i18next-instrument-ignore
+  { code: 'it', label: 'Italiano',   flag: '🇮🇹' },
   // i18next-instrument-ignore
   { code: 'es', label: 'Español',    flag: '🇪🇸' },
   // i18next-instrument-ignore
