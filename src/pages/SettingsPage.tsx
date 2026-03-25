@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTodos } from '../context/TodoContext'
 import styles from './SettingsPage.module.css'
+import { useTranslation } from 'react-i18next'
 
 // These are the languages that will be wired up with i18next in the tutorial.
 const LANGUAGES = [
@@ -57,6 +58,7 @@ function Toggle({ checked, onChange, id, label, description }: ToggleProps) {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function SettingsPage() {
+  const { t, i18n } = useTranslation()
   const { settings, profile, notifications, updateSettings, updateProfile, updateNotifications } = useTodos()
 
   const [editingName, setEditingName] = useState(false)
@@ -86,8 +88,8 @@ export default function SettingsPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Settings</h1>
-        <p className={styles.subtitle}>Manage your profile and preferences</p>
+        <h1 className={styles.title}>{t('settings', 'Settings')}</h1>
+        <p className={styles.subtitle}>{t('manageYourProfileAndPreferences', 'Manage your profile and preferences')}</p>
       </header>
 
       <div className={styles.sections}>
@@ -95,8 +97,8 @@ export default function SettingsPage() {
         {/* ── Profile ─────────────────────────────────────────────────────── */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Profile</h2>
-            <p className={styles.sectionDesc}>Your personal information shown in the app.</p>
+            <h2 className={styles.sectionTitle}>{t('profile', 'Profile')}</h2>
+            <p className={styles.sectionDesc}>{t('yourPersonalInformationShownInTheApp', 'Your personal information shown in the app.')}</p>
           </div>
 
           <div className={styles.profileCard}>
@@ -105,18 +107,18 @@ export default function SettingsPage() {
               <div
                 className={styles.avatar}
                 style={{ background: profile.avatarColor }}
-                aria-label="User avatar"
+                aria-label={t('userAvatar', 'User avatar')}
               >
                 {initials}
               </div>
-              <div className={styles.colorPicker} aria-label="Choose avatar color">
+              <div className={styles.colorPicker} aria-label={t('chooseAvatarColor', 'Choose avatar color')}>
                 {AVATAR_COLORS.map(color => (
                   <button
                     key={color}
                     className={`${styles.colorDot} ${profile.avatarColor === color ? styles.colorDotActive : ''}`}
                     style={{ background: color }}
                     onClick={() => updateProfile({ avatarColor: color })}
-                    aria-label={`Select color ${color}`}
+                    aria-label={t('selectColorColor', 'Select color {{color}}', { color })}
                     aria-pressed={profile.avatarColor === color}
                   />
                 ))}
@@ -126,7 +128,7 @@ export default function SettingsPage() {
             {/* Fields */}
             <div className={styles.profileFields}>
               <div className={styles.field}>
-                <label className={styles.fieldLabel}>Full name</label>
+                <label className={styles.fieldLabel}>{t('fullName', 'Full name')}</label>
                 {editingName ? (
                   <div className={styles.fieldEditRow}>
                     <input
@@ -137,19 +139,19 @@ export default function SettingsPage() {
                       autoFocus
                       maxLength={60}
                     />
-                    <button className={styles.saveBtn} onClick={saveName}>Save</button>
-                    <button className={styles.cancelBtn} onClick={() => { setNameInput(profile.name); setEditingName(false) }}>Cancel</button>
+                    <button className={styles.saveBtn} onClick={saveName}>{t('save', 'Save')}</button>
+                    <button className={styles.cancelBtn} onClick={() => { setNameInput(profile.name); setEditingName(false) }}>{t('cancel', 'Cancel')}</button>
                   </div>
                 ) : (
                   <div className={styles.fieldValueRow}>
                     <span className={styles.fieldValue}>{profile.name}</span>
-                    <button className={styles.editBtn} onClick={() => setEditingName(true)}>Edit</button>
+                    <button className={styles.editBtn} onClick={() => setEditingName(true)}>{t('edit', 'Edit')}</button>
                   </div>
                 )}
               </div>
 
               <div className={styles.field}>
-                <label className={styles.fieldLabel}>Email address</label>
+                <label className={styles.fieldLabel}>{t('emailAddress', 'Email address')}</label>
                 {editingEmail ? (
                   <div className={styles.fieldEditRow}>
                     <input
@@ -161,13 +163,13 @@ export default function SettingsPage() {
                       autoFocus
                       maxLength={80}
                     />
-                    <button className={styles.saveBtn} onClick={saveEmail}>Save</button>
-                    <button className={styles.cancelBtn} onClick={() => { setEmailInput(profile.email); setEditingEmail(false) }}>Cancel</button>
+                    <button className={styles.saveBtn} onClick={saveEmail}>{t('save', 'Save')}</button>
+                    <button className={styles.cancelBtn} onClick={() => { setEmailInput(profile.email); setEditingEmail(false) }}>{t('cancel', 'Cancel')}</button>
                   </div>
                 ) : (
                   <div className={styles.fieldValueRow}>
                     <span className={styles.fieldValue}>{profile.email}</span>
-                    <button className={styles.editBtn} onClick={() => setEditingEmail(true)}>Edit</button>
+                    <button className={styles.editBtn} onClick={() => setEditingEmail(true)}>{t('edit', 'Edit')}</button>
                   </div>
                 )}
               </div>
@@ -178,9 +180,9 @@ export default function SettingsPage() {
         {/* ── Language ────────────────────────────────────────────────────── */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Language</h2>
+            <h2 className={styles.sectionTitle}>{t('language', 'Language')}</h2>
             <p className={styles.sectionDesc}>
-              Choose the display language for the interface.
+              {t('chooseTheDisplayLanguageForTheInterface', 'Choose the display language for the interface.')}
             </p>
           </div>
           <div className={styles.languageGrid}>
@@ -188,7 +190,7 @@ export default function SettingsPage() {
               <button
                 key={lang.code}
                 className={`${styles.langBtn} ${settings.language === lang.code ? styles.langBtnActive : ''}`}
-                onClick={() => updateSettings({ language: lang.code })}
+                onClick={() => { i18n.changeLanguage(lang.code); updateSettings({ language: lang.code }); }}
                 aria-pressed={settings.language === lang.code}
               >
                 <span className={styles.langFlag}>{lang.flag}</span>
@@ -204,37 +206,37 @@ export default function SettingsPage() {
             ))}
           </div>
           <p className={styles.hint}>
-            ℹ️ Language switching will be fully functional after adding i18next in the tutorial.
+            {t('languageSwitchingWillBeFullyFunctionalAfterAddingI18nextInTheTutorial', 'ℹ️ Language switching will be fully functional after adding i18next in the tutorial.')}
           </p>
         </section>
 
         {/* ── Notifications ───────────────────────────────────────────────── */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Notifications</h2>
-            <p className={styles.sectionDesc}>Control which reminders you receive.</p>
+            <h2 className={styles.sectionTitle}>{t('notifications', 'Notifications')}</h2>
+            <p className={styles.sectionDesc}>{t('controlWhichRemindersYouReceive', 'Control which reminders you receive.')}</p>
           </div>
           <div className={styles.toggleList}>
             <Toggle
               id="notif-due-soon"
               checked={notifications.dueSoonAlerts}
               onChange={() => updateNotifications({ dueSoonAlerts: !notifications.dueSoonAlerts })}
-              label="Due soon alerts"
-              description="Get reminded when tasks are due within 24 hours"
+              label={t('dueSoonAlerts', 'Due soon alerts')}
+              description={t('getRemindedWhenTasksAreDueWithin24Hours', 'Get reminded when tasks are due within 24 hours')}
             />
             <Toggle
               id="notif-daily"
               checked={notifications.dailySummary}
               onChange={() => updateNotifications({ dailySummary: !notifications.dailySummary })}
-              label="Daily summary"
-              description="Receive a summary of your tasks every morning"
+              label={t('dailySummary', 'Daily summary')}
+              description={t('receiveASummaryOfYourTasksEveryMorning', 'Receive a summary of your tasks every morning')}
             />
             <Toggle
               id="notif-weekly"
               checked={notifications.weeklyReport}
               onChange={() => updateNotifications({ weeklyReport: !notifications.weeklyReport })}
-              label="Weekly report"
-              description="A weekly overview of your productivity and completed tasks"
+              label={t('weeklyReport', 'Weekly report')}
+              description={t('aWeeklyOverviewOfYourProductivityAndCompletedTasks', 'A weekly overview of your productivity and completed tasks')}
             />
           </div>
         </section>
@@ -242,16 +244,16 @@ export default function SettingsPage() {
         {/* ── Dashboard preferences ────────────────────────────────────────── */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Dashboard</h2>
-            <p className={styles.sectionDesc}>Configure what you see on the overview.</p>
+            <h2 className={styles.sectionTitle}>{t('dashboard', 'Dashboard')}</h2>
+            <p className={styles.sectionDesc}>{t('configureWhatYouSeeOnTheOverview', 'Configure what you see on the overview.')}</p>
           </div>
           <div className={styles.toggleList}>
             <Toggle
               id="pref-completed"
               checked={settings.showCompletedInDashboard}
               onChange={() => updateSettings({ showCompletedInDashboard: !settings.showCompletedInDashboard })}
-              label="Show completed tasks"
-              description="Include completed tasks in the dashboard statistics"
+              label={t('showCompletedTasks', 'Show completed tasks')}
+              description={t('includeCompletedTasksInTheDashboardStatistics', 'Include completed tasks in the dashboard statistics')}
             />
           </div>
         </section>
@@ -259,7 +261,7 @@ export default function SettingsPage() {
         {/* ── About ───────────────────────────────────────────────────────── */}
         <section className={styles.section}>
           <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>About</h2>
+            <h2 className={styles.sectionTitle}>{t('about', 'About')}</h2>
           </div>
           <div className={styles.aboutCard}>
             <div className={styles.aboutBrand}>
@@ -270,10 +272,9 @@ export default function SettingsPage() {
             </div>
             {/* i18next-instrument-ignore */}
             <p className={styles.aboutVersion}>Version 1.0.0</p>
-            <p className={styles.aboutStack}>Built with Vite · React · TypeScript</p>
+            <p className={styles.aboutStack}>{t('builtWithViteReactTypescript', 'Built with Vite · React · TypeScript')}</p>
             <p className={styles.aboutDesc}>
-              A minimal task management app created as a starter project for the
-              i18next internationalization tutorial.
+              {t('aMinimalTaskManagementAppCreatedAsAStarterProjectForTheI18nextInternationalizationTutorial', 'A minimal task management app created as a starter project for the\n              i18next internationalization tutorial.')}
             </p>
           </div>
         </section>

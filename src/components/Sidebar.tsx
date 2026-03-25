@@ -2,6 +2,7 @@ import type { Page } from '../types'
 import type { ReactNode } from 'react'
 import { useTodos } from '../context/TodoContext'
 import styles from './Sidebar.module.css'
+import { useTranslation } from 'react-i18next'
 
 interface SidebarProps {
   currentPage: Page
@@ -10,6 +11,7 @@ interface SidebarProps {
 
 const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
   {
+    // t('navItem.dashboard', 'Dashboard')
     page: 'dashboard',
     // i18next-instrument-ignore
     label: 'Dashboard',
@@ -23,6 +25,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
     ),
   },
   {
+    // t('navItem.tasks', 'My Tasks')
     page: 'tasks',
     // i18next-instrument-ignore
     label: 'My Tasks',
@@ -33,6 +36,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
     ),
   },
   {
+    // t('navItem.settings', 'Settings')
     page: 'settings',
     // i18next-instrument-ignore
     label: 'Settings',
@@ -46,6 +50,7 @@ const NAV_ITEMS: { page: Page; label: string; icon: ReactNode }[] = [
 ]
 
 export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
+  const { t } = useTranslation()
   const { todos, profile } = useTodos()
   const activeCount = todos.filter(t => !t.completed).length
   const completedCount = todos.filter(t => t.completed).length
@@ -84,7 +89,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className={styles.nav} aria-label="Main navigation">
+      <nav className={styles.nav} aria-label={t('mainNavigation', 'Main navigation')}>
         {NAV_ITEMS.map(item => (
           <button
             key={item.page}
@@ -95,9 +100,9 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             <span className={styles.navIcon} aria-hidden="true">
               {item.icon}
             </span>
-            <span className={styles.navLabel}>{item.label}</span>
+            <span className={styles.navLabel}>{t(`navItem.${item.page}`, item.label)}</span>
             {item.page === 'tasks' && activeCount > 0 && (
-              <span className={styles.badge} aria-label={`${activeCount} active tasks`}>
+              <span className={styles.badge} aria-label={t('activecountActiveTasks', '{{activeCount}} active tasks', { activeCount })}>
                 {activeCount}
               </span>
             )}
@@ -109,10 +114,8 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
       <div className={styles.footer}>
         <div className={styles.progressWrap}>
           <div className={styles.progressLabel}>
-            <span>Today's progress</span>
-            <span>
-              {completedCount}/{totalCount} {totalCount === 1 ? 'task' : 'tasks'}
-            </span>
+            <span>{t('todaysProgress', 'Today\'s progress')}</span>
+            <span>{t('completedcountcountTasks', { defaultValue_one: '{{completedCount}}/{{count}} task', defaultValue_other: '{{completedCount}}/{{count}} tasks', count: totalCount, completedCount })}</span>
           </div>
           <div className={styles.progressTrack}>
             <div
@@ -125,7 +128,7 @@ export default function Sidebar({ currentPage, onNavigate }: SidebarProps) {
             />
           </div>
           {totalCount > 0 && completedCount === totalCount && (
-            <p className={styles.allDone}>All done! Great work 🎉</p>
+            <p className={styles.allDone}>{t('allDoneGreatWork2', 'All done! Great work 🎉')}</p>
           )}
         </div>
       </div>

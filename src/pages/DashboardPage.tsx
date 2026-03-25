@@ -1,6 +1,7 @@
 import { useTodos } from '../context/TodoContext'
 import type { Category } from '../types'
 import styles from './DashboardPage.module.css'
+import { useTranslation, Trans } from 'react-i18next'
 
 const CATEGORY_LABELS: Record<Category, string> = {
   work: 'Work',
@@ -43,6 +44,7 @@ function isDueUrgent(dateStr: string) {
 const STREAK_DAYS = 5
 
 export default function DashboardPage() {
+  const { t } = useTranslation()
   const { todos, profile } = useTodos()
 
   const totalTasks    = todos.length
@@ -86,65 +88,58 @@ export default function DashboardPage() {
       <header className={styles.header}>
         <div className={styles.greetingRow}>
           <div>
-            <p className={styles.greeting}>{greeting}, {firstName}! 👋</p>
-            <h1 className={styles.title}>Here's your overview</h1>
+            <p className={styles.greeting}>{t('greetingFirstname', '{{greeting}}, {{firstName}}! 👋', { greeting, firstName })}</p>
+            <h1 className={styles.title}>{t('heresYourOverview', 'Here\'s your overview')}</h1>
+            <h2>{t('subTitle', 'some sub title here')}</h2>
           </div>
-          <div className={styles.streakBadge} title={`${STREAK_DAYS}-day streak`}>
-            <span className={styles.streakFlame}>🔥</span>
+          <div className={styles.streakBadge} title={t('streak_daysdayStreak', '{{STREAK_DAYS}}-day streak', { STREAK_DAYS })}>
+            <span className={styles.streakFlame}>{t('key', '🔥')}</span>
             <div>
               <span className={styles.streakNum}>{STREAK_DAYS}</span>
               <span className={styles.streakLabel}>
                 {/* @ts-ignore */}
-                {STREAK_DAYS === 1 ? 'day streak' : 'day streak'}
+                {t('dayStreak', { defaultValue_one: 'day streak', defaultValue_other: 'day streak', count: STREAK_DAYS })}
               </span>
             </div>
           </div>
         </div>
         <p className={styles.subtitle}>
-          {activeTasks === 0
-            ? 'You have no tasks left — enjoy your day!'
-            : activeTasks === 1
-            ? 'You have 1 task left to complete.'
-            : `You have ${activeTasks} tasks left to complete.`}
+          {t('youHaveCountTasksLeftToComplete', { defaultValue_zero: 'You have no tasks left — enjoy your day!', defaultValue_one: 'You have 1 task left to complete.', defaultValue_other: 'You have {{count}} tasks left to complete.', count: activeTasks })}
           {overdueTasks > 0 && (
             <span className={styles.overdueAlert}>
               {' '}
-              {overdueTasks === 1
-                ? '⚠️ 1 task is overdue.'
-                : `⚠️ ${overdueTasks} tasks are overdue.`}
+              {t('countTasksAreOverdue', { defaultValue_one: '⚠️ 1 task is overdue.', defaultValue_other: '⚠️ {{count}} tasks are overdue.', count: overdueTasks })}
             </span>
           )}
         </p>
       </header>
 
       {/* Stats grid */}
-      <section aria-label="Task statistics">
+      <section aria-label={t('taskStatistics', 'Task statistics')}>
         <div className={styles.statsGrid}>
           <div className={styles.statCard} data-accent="orange">
             <span className={styles.statNumber}>{activeTasks}</span>
-            <span className={styles.statLabel}>Active tasks</span>
+            <span className={styles.statLabel}>{t('activeTasks', 'Active tasks')}</span>
           </div>
           <div className={styles.statCard} data-accent="green">
             <span className={styles.statNumber}>{completedTasks}</span>
-            <span className={styles.statLabel}>Completed</span>
+            <span className={styles.statLabel}>{t('completed', 'Completed')}</span>
           </div>
           <div className={styles.statCard} data-accent="purple">
-            <span className={styles.statNumber}>{completionPct}%</span>
-            <span className={styles.statLabel}>Completion rate</span>
+            <span className={styles.statNumber}>{t('completionpct', '{{completionPct}}%', { completionPct })}</span>
+            <span className={styles.statLabel}>{t('completionRate', 'Completion rate')}</span>
           </div>
           <div className={styles.statCard} data-accent="red">
             <span className={styles.statNumber}>{highPriorityCount}</span>
-            <span className={styles.statLabel}>High priority</span>
+            <span className={styles.statLabel}>{t('highPriority', 'High priority')}</span>
           </div>
         </div>
       </section>
 
       <div className={styles.twoCol}>
         {/* Due soon */}
-        <section className={styles.section} aria-label="Upcoming deadlines">
-          <h2 className={styles.sectionTitle}>
-            <span>⏰</span> Due soon
-          </h2>
+        <section className={styles.section} aria-label={t('upcomingDeadlines', 'Upcoming deadlines')}>
+          <h2 className={styles.sectionTitle}><Trans i18nKey="spanspanDueSoon"><span>⏰</span> Due soon</Trans></h2>
           {dueSoon.length > 0 ? (
             <ul className={styles.dueList}>
               {dueSoon.map(todo => (
@@ -168,24 +163,20 @@ export default function DashboardPage() {
               ))}
             </ul>
           ) : (
-            <p className={styles.empty}>No upcoming deadlines 🎉</p>
+            <p className={styles.empty}>{t('noUpcomingDeadlines', 'No upcoming deadlines 🎉')}</p>
           )}
         </section>
 
         {/* By category */}
-        <section className={styles.section} aria-label="Tasks by category">
-          <h2 className={styles.sectionTitle}>
-            <span>📂</span> By category
-          </h2>
+        <section className={styles.section} aria-label={t('tasksByCategory', 'Tasks by category')}>
+          <h2 className={styles.sectionTitle}><Trans i18nKey="spanspanByCategory"><span>📂</span> By category</Trans></h2>
           {categories.length > 0 ? (
             <div className={styles.categoryList}>
               {categories.map(cat => (
                 <div key={cat.key} className={styles.categoryItem}>
                   <div className={styles.categoryHeader}>
                     <span>{cat.icon} {cat.label}</span>
-                    <span className={styles.categoryCount}>
-                      {cat.done} of {cat.total} done
-                    </span>
+                    <span className={styles.categoryCount}>{t('doneOfTotalDone', '{{done}} of {{total}} done', { done: cat.done, total: cat.total })}</span>
                   </div>
                   <div className={styles.categoryTrack}>
                     <div
@@ -200,17 +191,15 @@ export default function DashboardPage() {
               ))}
             </div>
           ) : (
-            <p className={styles.empty}>No tasks yet. Add some!</p>
+            <p className={styles.empty}>{t('noTasksYetAddSome', 'No tasks yet. Add some!')}</p>
           )}
         </section>
       </div>
 
       {/* Recently completed */}
       {recentlyCompleted.length > 0 && (
-        <section className={styles.section} aria-label="Recently completed">
-          <h2 className={styles.sectionTitle}>
-            <span>✅</span> Recently completed
-          </h2>
+        <section className={styles.section} aria-label={t('recentlyCompleted', 'Recently completed')}>
+          <h2 className={styles.sectionTitle}><Trans i18nKey="spanspanRecentlyCompleted"><span>✅</span> Recently completed</Trans></h2>
           <ul className={styles.recentList}>
             {recentlyCompleted.map(todo => (
               <li key={todo.id} className={styles.recentItem}>

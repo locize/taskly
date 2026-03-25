@@ -1,5 +1,6 @@
 import { useState, useId } from 'react'
 import styles from './TodoApp.module.css'
+import { useTranslation } from 'react-i18next'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -33,12 +34,13 @@ interface TodoItemProps {
 }
 
 function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
+  const { t } = useTranslation()
   return (
     <li className={`${styles.item} ${todo.completed ? styles.itemCompleted : ''}`}>
       <button
         className={styles.checkbox}
         onClick={() => onToggle(todo.id)}
-        aria-label={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
+        aria-label={todo.completed ? t('markAsIncomplete', 'Mark as incomplete') : t('markAsComplete', 'Mark as complete')}
         aria-pressed={todo.completed}
       >
         {todo.completed && (
@@ -53,7 +55,7 @@ function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
       <button
         className={styles.deleteBtn}
         onClick={() => onDelete(todo.id)}
-        aria-label="Delete task"
+        aria-label={t('deleteTask', 'Delete task')}
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
@@ -66,6 +68,7 @@ function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function TodoApp() {
+  const { t } = useTranslation()
   const [todos, setTodos] = useState<Todo[]>(INITIAL_TODOS)
   const [inputValue, setInputValue] = useState('')
   const [filter, setFilter] = useState<FilterType>('all')
@@ -109,9 +112,9 @@ export default function TodoApp() {
   }
 
   const filters: { key: FilterType; label: string }[] = [
-    { key: 'all', label: 'All' },
-    { key: 'active', label: 'Active' },
-    { key: 'completed', label: 'Completed' },
+    { key: 'all', label: t('all', 'All') },
+    { key: 'active', label: t('active', 'Active') },
+    { key: 'completed', label: t('completed', 'Completed') },
   ]
 
   return (
@@ -124,17 +127,13 @@ export default function TodoApp() {
         <header className={styles.header}>
           <div className={styles.headerTop}>
             <span className={styles.logo}>✦</span>
-            <p className={styles.tagline}>Stay on top of your day</p>
+            <p className={styles.tagline}>{t('stayOnTopOfYourDay', 'Stay on top of your day')}</p>
           </div>
-          <h1 className={styles.title}>Taskly</h1>
+          <h1 className={styles.title}>{t('taskly', 'Taskly')}</h1>
           <div className={styles.stats}>
-            <span className={styles.statBadge} data-variant="active">
-              {activeCount} {activeCount === 1 ? 'task' : 'tasks'} remaining
-            </span>
+            <span className={styles.statBadge} data-variant="active">{t('countTasksRemaining', { defaultValue_one: '{{count}} task remaining', defaultValue_other: '{{count}} tasks remaining', count: activeCount })}</span>
             {completedCount > 0 && (
-              <span className={styles.statBadge} data-variant="done">
-                {completedCount} done
-              </span>
+              <span className={styles.statBadge} data-variant="done">{t('completedcountDone', '{{completedCount}} done', { completedCount })}</span>
             )}
           </div>
         </header>
@@ -144,13 +143,13 @@ export default function TodoApp() {
           {/* Input area */}
           <div className={styles.inputArea}>
             <label htmlFor={inputId} className={styles.srOnly}>
-              New task
+              {t('newTask', 'New task')}
             </label>
             <input
               id={inputId}
               className={styles.input}
               type="text"
-              placeholder="Add a new task…"
+              placeholder={t('addANewTask', 'Add a new task…')}
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -160,17 +159,17 @@ export default function TodoApp() {
               className={styles.addBtn}
               onClick={addTodo}
               disabled={!inputValue.trim()}
-              aria-label="Add task"
+              aria-label={t('addTask', 'Add task')}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M8 1V15M1 8H15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              Add
+              {t('add', 'Add')}
             </button>
           </div>
 
           {/* Filter tabs */}
-          <div className={styles.filters} role="tablist" aria-label="Filter tasks">
+          <div className={styles.filters} role="tablist" aria-label={t('filterTasks', 'Filter tasks')}>
             {filters.map(f => (
               <button
                 key={f.key}
@@ -203,10 +202,10 @@ export default function TodoApp() {
               </span>
               <p>
                 {filter === 'completed'
-                  ? 'No completed tasks yet'
+                  ? t('noCompletedTasksYet', 'No completed tasks yet')
                   : filter === 'active'
-                  ? 'No active tasks — enjoy your break!'
-                  : 'No tasks yet. Add one above!'}
+                  ? t('noActiveTasksEnjoyYourBreak', 'No active tasks — enjoy your break!')
+                  : t('noTasksYetAddOneAbove', 'No tasks yet. Add one above!')}
               </p>
             </div>
           )}
@@ -214,9 +213,7 @@ export default function TodoApp() {
           {/* Footer */}
           {completedCount > 0 && (
             <div className={styles.footer}>
-              <button className={styles.clearBtn} onClick={clearCompleted}>
-                Clear completed ({completedCount})
-              </button>
+              <button className={styles.clearBtn} onClick={clearCompleted}>{t('clearCompletedCompletedcount', 'Clear completed ({{completedCount}})', { completedCount })}</button>
             </div>
           )}
         </div>
